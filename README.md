@@ -1,12 +1,14 @@
 
 # electron-react-file-explorer 😍
 This is a rewrite of the excellent [file-explorer example](https://github.com/hokein/electron-sample-apps/tree/master/file-explorer) by @hokein, using React.
-The React part is wrapped into a desktop Electron app following the steps of this medium post(https://medium.com/@kitze/%EF%B8%8F-from-react-to-an-electron-app-ready-for-production-a0468ecb1da3) by @kitze.
+The React part is wrapped into a desktop Electron app following the steps of [this medium post](https://medium.com/@kitze/%EF%B8%8F-from-react-to-an-electron-app-ready-for-production-a0468ecb1da3) by @kitze.
 This project uses [yarn](https://yarnpkg.com) as its default package manager.
 
 ## Scripts
 ```yarn run electron-dev``` will start the Electron app and the React app at the same time.
+
 ```yarn start``` will start the Create-React-App (CRA) development server only. For development ease, I usually run "yarn start" first using another terminal window before running "yarn run electron-dev". Then the development server started by "yarn start" would always run in the background, during development. This works great with CRA development server's hot reload!😍
+
 ```yarn build``` will build the React app and package it along the Electron app.
 
 ## Create-React-App
