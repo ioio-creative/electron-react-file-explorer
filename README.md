@@ -9,7 +9,7 @@ This project uses [yarn](https://yarnpkg.com) as its default package manager.
 
 ```yarn start``` will start the Create-React-App (CRA) development server only. For development ease, I usually run "yarn start" first using another terminal window before running "yarn run electron-dev". Then the development server started by "yarn start" would always run in the background, during development. This works great with CRA development server's hot reload!😍
 
-```yarn build``` will build the React app and package it along the Electron app.
+```yarn run electron-pack``` will build the React app and package it along the Electron app.
 
 ## Create-React-App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

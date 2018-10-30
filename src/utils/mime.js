@@ -7,7 +7,7 @@ const path = window.require('path');
 const map = {
   'compressed': ['zip', 'rar', 'gz', '7z'],
   'text': ['txt', 'md', ''],
-  'image': ['jpg', 'jpge', 'png', 'gif', 'bmp'],
+  'image': ['jpg', 'jpeg', 'png', 'gif', 'bmp'],
   'pdf': ['pdf'],
   'css': ['css'],
   'html': ['html'],
@@ -33,7 +33,7 @@ const stat = (filepath) => {
       result.type = cached[ext];
       if (!result.type) {
         for (let key in map) {
-          if (map[key].includes(ext)) {
+          if (map[key].includes(ext.toLowerCase())) {
             cached[ext] = result.type = key;
             break;
           }
