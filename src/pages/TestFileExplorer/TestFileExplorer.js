@@ -147,14 +147,7 @@ class TestFileExplorer extends Component {
             />
           </div>
           <div className="row" style={{background: "#FFF", WebkitBorderRadius: "2px", margin: "-5px 1px 0 -19px", height: "100%", overflow: "auto"}}>
-            {/* 
-              Note: 
-              Setting key is compulsory for the FolderView to re-mount after path change.
-              The remount is needed to refresh the view because the fileSystem.readDirectory() async operation, used when setting 
-              states.files, is carried out in 
-              the componentDidMount() life cycle method.
-            */}
-            <FolderView key={state.currentPath}
+            <FolderView
               currentPath={state.currentPath}
               handleFileItemClickFunc={this.handleFileItemClick}
             />

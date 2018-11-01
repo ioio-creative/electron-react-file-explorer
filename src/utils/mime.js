@@ -18,15 +18,14 @@ const map = {
 
 let cached = {};
 
-const stat = (filepath) => {
+const statSync = (filepath) => {
   const result = {
     name: path.basename(filepath),
     path: filepath
   };
 
   try {
-    const stat = fileSystem.statSync(filepath);
-    if (stat.isDirectory()) {
+    if (fileSystem.isDirectorySync(filepath)) {
       result.type = 'folder';
     } else {
       const ext = path.extname(filepath).substr(1);
@@ -51,5 +50,5 @@ const stat = (filepath) => {
 };
 
 export default {
-  stat
+  statSync
 };

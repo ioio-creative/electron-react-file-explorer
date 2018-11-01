@@ -16,7 +16,7 @@ function FileItem(props) {
   return (
     <div className={addFocusClass("file")}
       onClick={(evnt) => { props.handleClickFunc(evnt, props.idx); }}
-      onDoubleClick={() => { props.handledDoubleClickFunc(props.path, mime.stat(props.path)); }}>
+      onDoubleClick={() => { props.handledDoubleClickFunc(props.path, mime.statSync(props.path)); }}>
       <div className={addFocusClass("icon")}>
         <img src={getAbsoluteUrlFromRelativeUrl(`fileExplorer/icons/${props.type}.png`)} />
         <div className={addFocusClass("name")}>{props.name}</div>
@@ -28,36 +28,52 @@ function FileItem(props) {
 class FolderView extends Component {
   constructor(props) {
     super(props);
-
+    
     this.defaultFocusedItemIdx = -1;
+    this.oldCurrentPath = "";
 
     this.state = {
       files: [],
       focusedItemIdx: this.defaultFocusedItemIdx
     };
 
+    this.enumerateDirectory = this.enumerateDirectory.bind(this);
+
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
     this.handleFileItemClick = this.handleFileItemClick.bind(this);
     this.handleFileItemDoubleClick = this.handleFileItemDoubleClick.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount() {    
+    this.enumerateDirectory();
+  }
+
+  componentDidUpdate() {    
+    this.enumerateDirectory();
+  }
+
+  enumerateDirectory() {
     const props = this.props;
-    fileSystem.readDirectory(props.currentPath, (error, files) => {
-      if (error) {
-        console.log(error);
-        window.alert(error);
-        return;
-      }
 
-      const customisedFiles = files.map((file) => {
-        return mime.stat(path.join(props.currentPath, file))
+    if (props.currentPath !== this.oldCurrentPath) {
+      fileSystem.readDirectory(props.currentPath, (error, files) => {
+        if (error) {
+          console.log(error);
+          window.alert(error);
+          return;
+        }
+
+        const customisedFiles = files.map((file) => {
+          return mime.statSync(path.join(props.currentPath, file))
+        });
+
+        this.setState({
+          files: customisedFiles
+        });
       });
 
-      this.setState({
-        files: customisedFiles
-      });
-    });
+      this.oldCurrentPath = props.currentPath;
+    }
   }
 
  /* event handlers */
