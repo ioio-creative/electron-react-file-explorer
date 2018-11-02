@@ -24,7 +24,7 @@ const statSync = (filepath) => {
     path: filepath
   };
 
-  try {
+  try {    
     if (fileSystem.isDirectorySync(filepath)) {
       result.type = 'folder';
     } else {
