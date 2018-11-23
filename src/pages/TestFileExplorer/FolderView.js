@@ -42,10 +42,17 @@ class FolderView extends Component {
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
     this.handleFileItemClick = this.handleFileItemClick.bind(this);
     this.handleFileItemDoubleClick = this.handleFileItemDoubleClick.bind(this);
+
+    this.handleWindowFocus = this.handleWindowFocus.bind(this);
   }
 
-  componentDidMount() {    
+  componentDidMount() {
+    window.addEventListener('focus', this.handleWindowFocus);
     this.enumerateDirectory();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('focus', this.handleWindowFocus);
   }
 
   componentDidUpdate() {    
@@ -101,7 +108,12 @@ class FolderView extends Component {
   // Double click on file
   handleFileItemDoubleClick(filePath, mime) {
     this.props.handleFileItemClickFunc(filePath, mime);
-  } 
+  }
+
+  // Refresh when in focus again
+  handleWindowFocus() {
+    this.enumerateDirectory();
+  }
 
   /* end of event handlers */
 
