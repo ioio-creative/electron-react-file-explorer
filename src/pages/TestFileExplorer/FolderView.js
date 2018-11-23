@@ -29,8 +29,7 @@ class FolderView extends Component {
   constructor(props) {
     super(props);
     
-    this.defaultFocusedItemIdx = -1;
-    this.oldCurrentPath = "";
+    this.defaultFocusedItemIdx = -1;    
 
     this.state = {
       files: [],
@@ -55,35 +54,33 @@ class FolderView extends Component {
     window.removeEventListener('focus', this.handleWindowFocus);
   }
 
-  componentDidUpdate() {    
-    this.enumerateDirectory();
+  componentDidUpdate(prevProps, prevState) {    
+    if (this.props.currentPath !== prevProps.currentPath) {
+      this.enumerateDirectory();
+    }
   }
 
   enumerateDirectory() {
     const props = this.props;
+    
+    fileSystem.readDirectory(props.currentPath, (error, files) => {
+      if (error) {
+        console.log(error);
+        window.alert(error);
+        return;
+      }
 
-    if (props.currentPath !== this.oldCurrentPath) {
-      fileSystem.readDirectory(props.currentPath, (error, files) => {
-        if (error) {
-          console.log(error);
-          window.alert(error);
-          return;
-        }
-
-        const customisedFiles = files.map((file) => {
-          return mime.statSync(path.join(props.currentPath, file))
-        });
-
-        this.setState({
-          files: customisedFiles
-        });
+      const customisedFiles = files.map((file) => {
+        return mime.statSync(path.join(props.currentPath, file))
       });
 
-      this.oldCurrentPath = props.currentPath;
-    }
+      this.setState({
+        files: customisedFiles
+      });
+    });
   }
 
- /* event handlers */
+  /* event handlers */
 
   // Click on blank
   // Note: It's important to have the background <ul> element has height 100%
